@@ -1,0 +1,488 @@
+-------TIP CALCULATOR-------
+
+print("Welcome to the tip calculator!")
+bill = float(input("What was the total bill? $"))
+tip = float(input("What percentage tip would you like to give? 10, 12, or 15 "))
+people = int(input("How many people to split the bill? "))
+
+bill_plus_tip = float(((tip / 100) * bill + bill))
+bill_per_person = (bill_plus_tip / people)
+final_amount = round(bill_per_person, 2)
+
+print(f"Each person should pay: ${final_amount}")
+
+
+
+
+
+-------TREASURE ISLAND GAME-------
+
+print('''
+*******************************************************************************
+          |                   |                  |                     |
+ _________|________________.=""_;=.______________|_____________________|_______
+|                   |  ,-"_,=""     `"=.|                  |
+|___________________|__"=._o`"-._        `"=.______________|___________________
+          |                `"=._o`"=._      _`"=._                     |
+ _________|_____________________:=._o "=._."_.-="'"=.__________________|_______
+|                   |    __.--" , ; `"=._o." ,-"""-._ ".   |
+|___________________|_._"  ,. .` ` `` ,  `"-._"-._   ". '__|___________________
+          |           |o`"=._` , "` `; .". ,  "-._"-._; ;              |
+ _________|___________| ;`-.o`"=._; ." ` '`."\ ` . "-._ /_______________|_______
+|                   | |o ;    `"-.o`"=._``  '` " ,__.--o;   |
+|___________________|_| ;     (#) `-.o `"=.`_.--"_o.-; ;___|___________________
+____/______/______/___|o;._    "      `".o|o_.--"    ;o;____/______/______/____
+/______/______/______/_"=._o--._        ; | ;        ; ;/______/______/______/_
+____/______/______/______/__"=._o--._   ;o|o;     _._;o;____/______/______/____
+/______/______/______/______/____"=._o._; | ;_.--"o.--"_/______/______/______/_
+____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
+/______/______/______/______/______/______/______/______/______/______/_____ /
+*******************************************************************************
+''')
+print("Welcome to Treasure Island.")
+print("Your mission is to find the treasure.")
+crossroad_1 = (input("You are at a crossroad. Which way would you like to go: left or right"))
+
+if crossroad_1 == "Left" or crossroad_1 == "left":
+    crossroad_2 = (input("You have arrived at a lake and can see an island. Do you wait for a boat or swim?"))
+    if crossroad_2 == "Wait" or crossroad_2 == "wait" or crossroad_2 == "wait for a boat":
+        crossroad_3 = input("You make it to the island and come upon a house with 3 doors. Which door do you choose: "
+                            "red, yellow, or blue?")
+        if crossroad_3 == "Red" or crossroad_3 == "red" or crossroad_3 == "red door":
+            print("The door locks behind you. You flip on the lights to see a killer clown waiting for you. RIP. Game Over.")
+        elif crossroad_3 == "Blue" or crossroad_3 == "blue" or crossroad_3 == "blue door":
+            print("The door locks behind you. You flip on what you think is a light switch. Suddenly the floor crumbles "
+                  "away and below is flowing lava! You have been incinerated. RIP. Game Over.")
+        elif crossroad_3 == "Yellow" or crossroad_3 == "yellow" or crossroad_3 == "yellow door":
+            print("Congrats, you've found the treasure. You win!")
+        else:
+            print("You're answer is invalid. Game Over.")
+    elif crossroad_2 == "Swim" or crossroad_2 == "swim" or crossroad_2 == "swim to the island":
+        print("A school of piranhas has ripped to to shreds. RIP. Game Over.")
+    else:
+        print("You're answer is invalid. Game Over.")
+elif crossroad_1 == "Right" or crossroad_1 == "right" or crossroad_1 == "go right":
+    print("You fell into a deep dark well with no way out. Game Over.")
+else:
+    print("You're answer is invalid. Game Over.")
+
+
+
+
+
+-------ROCK, PAPER, SCISSORS GAME-------
+
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+
+game_images = [rock, paper, scissors]
+
+import random
+
+user_choice = int(input('What do you choose? Type "0" for Rock, "1" for Paper, or "2: for Scissors.\n'))
+if user_choice == 0:
+    print("You chose rock" + rock)
+elif user_choice == 1:
+    print("You chose paper" + paper)
+elif user_choice == 2:
+    print("You chose scissors" + scissors)
+
+computer_choice = random.randint(0,2)
+if computer_choice == 0:
+    print("Computer chose rock" + rock)
+elif computer_choice == 1:
+    print("Computer chose paper" + paper)
+elif computer_choice == 2:
+    print("Computer chose scissors" + scissors)
+
+if user_choice == computer_choice:
+    print("Tie game.")
+elif user_choice == 0 and computer_choice == 1:
+    print("You lose.")
+elif user_choice == 0 and computer_choice == 2:
+    print("You win.")
+elif user_choice == 1 and computer_choice == 0:
+    print("You win.")
+elif user_choice == 1 and computer_choice == 2:
+    print("You lose.")
+elif user_choice == 2 and computer_choice == 0:
+    print("You lose.")
+elif user_choice == 2 and computer_choice == 1:
+    print("You win.")
+
+
+
+
+
+-------PASSWORD GENERATOR-------
+
+import random
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+print("Welcome to the PyPassword Generator!")
+nr_letters = int(input("How many letters would you like in your password?\n"))
+nr_symbols = int(input(f"How many symbols would you like?\n"))
+nr_numbers = int(input(f"How many numbers would you like?\n"))
+
+#Easy Level
+password = ""
+
+for Letters in range(1,nr_letters + 1):
+    random_letter = random.choice(letters)
+    password = password + random_letter
+
+for Symbols in range(1,nr_symbols + 1):
+    random_symbol = random.choice(symbols)
+    password = password + random_symbol
+
+for Numbers in range(1,nr_numbers + 1):
+    random_number = random.choice(numbers)
+    password = password + random_number
+
+print(password)
+
+#Hard Level
+password = []
+
+for characters in range(1,nr_letters + 1):
+    password.append(random.choice(letters))
+
+for characters in range(1,nr_symbols + 1):
+    password.append(random.choice(symbols))
+
+for characters in range(1,nr_numbers + 1):
+    password.append(random.choice(numbers))
+
+random.shuffle(password)
+
+final_password = ""
+for characters in password:
+    final_password += characters
+
+print(f"Your password is: {final_password}")
+
+
+
+
+
+-------HANGMAN GAME-------
+
+import random
+import hangman_words
+
+lives = 6
+
+import hangman_art
+chosen_word = random.choice(hangman_words.word_list)
+
+print(hangman_art.logo)
+
+placeholder = ""
+word_length = len(chosen_word)
+for position in range(word_length):
+    placeholder += "_"
+print("Word to guess: " + placeholder)
+
+game_over = False
+correct_letters = []
+
+while not game_over:
+
+    print(f"You have {lives}/6 lives remaining.")
+    guess = input("Guess a letter: ").lower()
+
+    if guess in correct_letters:
+        print(f"You've already guessed {guess}. Choose another letter.")
+
+    display = ""
+
+    for letter in chosen_word:
+        if letter == guess:
+            display += letter
+            correct_letters.append(guess)
+        elif letter in correct_letters:
+            display += letter
+        else:
+            display += "_"
+
+    print("Word to guess: " + display)
+
+    if guess not in chosen_word:
+        lives -= 1
+        print(F"{guess} is not in the word. You lose a life.")
+
+        if lives == 0:
+            game_over = True
+
+            # TODO 7: - Update the print statement below to give the user the correct word they were trying to guess.
+            print(f"You lose. The word was {chosen_word}.")
+
+    if "_" not in display:
+        game_over = True
+        print("Congrats, you win.")
+
+    print(hangman_art.stages[lives])
+
+
+
+
+
+-------CAESAR CIPHER-------
+
+import art
+print(art.logo)
+
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+def caesar(original_text, shift_amount, encode_or_decode):
+    output_text = ""
+    if encode_or_decode == "decode":
+        shift_amount *= -1
+
+    for letter in original_text:
+        if letter not in alphabet:
+            output_text += letter
+        else:
+            shifted_position = alphabet.index(letter) + shift_amount
+            shifted_position %= len(alphabet)
+            output_text += alphabet[shifted_position]
+    print(f"Here is the {encode_or_decode}d result: {output_text}")
+
+should_continue = True
+
+while should_continue:
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
+    text = input("Type your message:\n").lower()
+    shift = int(input("Type the shift number:\n"))
+
+    caesar(original_text=text, shift_amount=shift, encode_or_decode=direction)
+
+    restart = input("Type 'yes' if you want to go again. Otherwise, type 'no'.\n").lower()
+    if restart == "no":
+        should_continue = False
+        print("Goodbye.")
+
+
+
+
+
+-------CALCULATOR-------
+
+import art
+print(art.logo)
+
+def add(n1, n2):
+    return n1 + n2
+
+def subtract(n1, n2):
+    return n1 - n2
+
+def multiply(n1, n2):
+    return n1 * n2
+
+def divide(n1, n2):
+    return n1 / n2
+
+operations = {
+    "+": add,
+    "-": subtract,
+    "*": multiply,
+    "/": divide,
+}
+
+def calculator():
+    continue_working = True
+    number_1 = float(input("What's the first number?: "))
+
+    while continue_working:
+        for symbol in operations:
+            print(symbol)
+        operation_symbol = input("Pick an operation: ")
+        number_2 = float(input("What's the next number?: "))
+        answer = (operations[operation_symbol](number_1, number_2))
+        print(f"{number_1} {operation_symbol} {number_2} = {answer}")
+
+        choice = input(f"Type 'y' to continue calculating with {answer}, or type 'n' to start a new calculation.").lower()
+
+        if choice == 'y':
+            number_1 = answer
+        else:
+            continue_working = False
+            print("\n" * 20)
+            print(art.logo)
+            calculator()
+
+calculator()
+
+
+
+
+
+-------BLACKJACK GAME-------
+
+import random
+
+import art
+
+def deal_card():
+    """Returns a random card from the deck"""
+    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    card = random.choice(cards)
+    return card
+
+def calculate_score(cards):
+    """Takes a list of cards and return the score calculated from cards"""
+    if sum(cards) == 21 and len(cards) == 2:
+        return 0
+    if 11 in cards and sum(cards) > 21:
+        cards.remove(11)
+        cards.append(1)
+    return sum(cards)
+
+def compare(u_score, c_score):
+    if u_score == c_score:
+        return "Draw"
+    elif c_score == 0:
+        return "You lose! Opponent has Blackjack."
+    elif u_score == 0:
+        return "You win! You have Blackjack."
+    elif u_score > 21:
+        return "You lose! You went over 21."
+    elif c_score > 21:
+        return "You win! Opponent went over 21."
+    elif u_score > c_score:
+        return "You win! Your score is higher than you opponent's score."
+    else:
+        return "You lose. Your score is lower than your opponent's score."
+
+def play_game():
+    print(art.logo)
+    user_cards = []
+    computer_cards = []
+    computer_score = -1
+    user_score = -1
+    is_game_over = False
+
+    for _ in range(2):
+        user_cards.append(deal_card())
+        computer_cards.append(deal_card())
+
+    while not is_game_over:
+        user_score = calculate_score(user_cards)
+        computer_score = calculate_score(computer_cards)
+        print(f"Your cards: {user_cards}, current score: {user_score}")
+        print(f"Computer's first card: {computer_cards[0]}")
+
+        if user_score == 0 or computer_score == 0 or user_score > 21:
+            is_game_over = True
+        else:
+            user_should_deal = input("Type 'y' to get another card or type 'n' to pass: ")
+            if user_should_deal == 'y':
+                user_cards.append(deal_card())
+            else:
+                is_game_over = True
+
+    while computer_score != 0 and computer_score < 17:
+        computer_cards.append(deal_card())
+        computer_score = calculate_score(computer_cards)
+
+    print(f"Your final hand: {user_cards}, final score: {user_score}")
+    print(f"Computer's final hand: {computer_cards}, final score: {computer_score}")
+    print(compare(user_score, computer_score))
+
+while input("Do you want to play a game of Blackjack? Type 'y' or 'n': ").lower() == "y":
+    print("\n" * 20)
+    play_game()
+
+
+
+
+
+-------NUMBER GUESSING GAME-------
+
+import random
+logo = """
+  ▄████  █    ██ ▓█████   ██████   ██████    ▄▄▄█████▓ ██░ ██ ▓█████     ███▄    █  █    ██  ███▄ ▄███▓ ▄▄▄▄   ▓█████  ██▀███  
+ ██▒ ▀█▒ ██  ▓██▒▓█   ▀ ▒██    ▒ ▒██    ▒    ▓  ██▒ ▓▒▓██░ ██▒▓█   ▀     ██ ▀█   █  ██  ▓██▒▓██▒▀█▀ ██▒▓█████▄ ▓█   ▀ ▓██ ▒ ██▒
+▒██░▄▄▄░▓██  ▒██░▒███   ░ ▓██▄   ░ ▓██▄      ▒ ▓██░ ▒░▒██▀▀██░▒███      ▓██  ▀█ ██▒▓██  ▒██░▓██    ▓██░▒██▒ ▄██▒███   ▓██ ░▄█ ▒
+░▓█  ██▓▓▓█  ░██░▒▓█  ▄   ▒   ██▒  ▒   ██▒   ░ ▓██▓ ░ ░▓█ ░██ ▒▓█  ▄    ▓██▒  ▐▌██▒▓▓█  ░██░▒██    ▒██ ▒██░█▀  ▒▓█  ▄ ▒██▀▀█▄  
+░▒▓███▀▒▒▒█████▓ ░▒████▒▒██████▒▒▒██████▒▒     ▒██▒ ░ ░▓█▒░██▓░▒████▒   ▒██░   ▓██░▒▒█████▓ ▒██▒   ░██▒░▓█  ▀█▓░▒████▒░██▓ ▒██▒
+ ░▒   ▒ ░▒▓▒ ▒ ▒ ░░ ▒░ ░▒ ▒▓▒ ▒ ░▒ ▒▓▒ ▒ ░     ▒ ░░    ▒ ░░▒░▒░░ ▒░ ░   ░ ▒░   ▒ ▒ ░▒▓▒ ▒ ▒ ░ ▒░   ░  ░░▒▓███▀▒░░ ▒░ ░░ ▒▓ ░▒▓░
+  ░   ░ ░░▒░ ░ ░  ░ ░  ░░ ░▒  ░ ░░ ░▒  ░ ░       ░     ▒ ░▒░ ░ ░ ░  ░   ░ ░░   ░ ▒░░░▒░ ░ ░ ░  ░      ░▒░▒   ░  ░ ░  ░  ░▒ ░ ▒░
+░ ░   ░  ░░░ ░ ░    ░   ░  ░  ░  ░  ░  ░       ░       ░  ░░ ░   ░         ░   ░ ░  ░░░ ░ ░ ░      ░    ░    ░    ░     ░░   ░ 
+      ░    ░        ░  ░      ░        ░               ░  ░  ░   ░  ░            ░    ░            ░    ░         ░  ░   ░     
+                                                                                                             ░                 
+"""
+
+print(logo)
+
+print("Welcome to the Number Guessing Game!")
+print("I'm thinking of a number between 1 and 100.")
+number = random.randint(1,100)
+# print(number)
+playing_game = True
+difficulty = input("Choose a difficulty. Type 'easy' or 'hard'.").lower()
+
+if difficulty == "easy":
+    print("You have 10 attempts remaining to guess the number.")
+    attempts = 10
+else:
+    print("You have 5 attempts remaining to guess the number.")
+    attempts = 5
+
+while playing_game is True:
+    make_a_guess = int(input("Make a guess: "))
+    if make_a_guess == number:
+        playing_game = False
+        print(f"You got it! The answer was {number}.")
+    elif make_a_guess < number:
+        print("Too low.")
+        attempts = attempts - 1
+        if attempts == 0:
+            playing_game = False
+            print(f"You lose! The number to guess was {number}.")
+        else:
+            print("Guess again.")
+            print(f"You have {attempts} attempts remaining to guess the number.")
+    elif make_a_guess > number:
+        print("Too high.")
+        attempts = attempts - 1
+        if attempts == 0:
+            playing_game = False
+            print(f"You lose! The number to guess was {number}.")
+        else:
+            print("Guess again.")
+            print(f"You have {attempts} attempts remaining to guess the number.")
+
+
+
+
+
+-------HIGHER OR LOWER GAME-------
+
