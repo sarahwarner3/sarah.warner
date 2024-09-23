@@ -909,3 +909,265 @@ screen.exitonclick()
 
 -------PONG GAME-------
 
+from turtle import Turtle
+
+class Ball(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.shape("circle")
+        self.color("white")
+        self.penup()
+        self.x_move = 3
+        self.y_move = 3
+
+    def move(self):
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
+        self.goto(new_x, new_y)
+
+    def bounce_y(self):
+        self.y_move *= -1
+
+    def bounce_x(self):
+        self.x_move *= -1
+
+    def reset_ball(self):
+        self.goto(0,0)
+        self.bounce_x()
+
+from turtle import Turtle
+
+class Paddle(Turtle):
+    def __init__(self, position):
+        super().__init__()
+        self.shape("square")
+        self.color("white")
+        self.shapesize(stretch_wid = 5, stretch_len = 1)
+        self.penup()
+        self.goto(position)
+
+    def go_up(self):
+        new_y = self.ycor() + 20
+        self.goto(self.xcor(), new_y)
+
+    def go_down(self):
+        new_y = self.ycor() - 20
+        self.goto(self.xcor(), new_y)
+
+from turtle import Turtle
+ALIGNMENT = "Center"
+FONT = ("Courier", 20, "normal")
+
+class Scoreboard(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.color("white")
+        self.penup()
+        self.hideturtle()
+        self.l_score = 0
+        self.r_score = 0
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.clear()
+        self.goto(-170, 240)
+        self.write(f"PLAYER 1: {self.l_score}", align=ALIGNMENT, font=FONT)
+        self.goto(170, 240)
+        self.write(f"PLAYER 2: {self.r_score}", align=ALIGNMENT, font=FONT)
+
+    def l_point(self):
+        self.l_score += 1
+
+    def r_point(self):
+        self.r_score += 1
+
+from turtle import Screen
+from paddle import Paddle
+from ball import Ball
+from scoreboard import Scoreboard
+import time
+
+screen = Screen()
+scoreboard = Scoreboard()
+screen.setup(width=800, height=600)
+screen.bgcolor("DarkSlateGrey")
+screen.title("PONG")
+screen.tracer(0)
+
+l_paddle = Paddle((-350, 0))
+r_paddle = Paddle((350, 0))
+ball = Ball()
+
+screen.listen()
+screen.onkey(r_paddle.go_up, "Up")
+screen.onkey(r_paddle.go_down, "Down")
+screen.onkey(l_paddle.go_up, "w")
+screen.onkey(l_paddle.go_down, "s")
+
+game_is_on = True
+
+while game_is_on:
+    screen.update()
+    ball.move()
+
+    # Detect collision with wall
+    if ball.ycor() > 290 or ball.ycor() < -290:
+        ball.bounce_y()
+
+    # Detect collision with paddle
+    if ball.distance(r_paddle) < 50 and ball.xcor() > 340 or ball.distance(l_paddle) < 50 and ball.xcor() < -340:
+        ball.bounce_x()
+
+    # Detect r_paddle miss
+    if ball.xcor() > 390:
+        ball.reset_ball()
+        scoreboard.l_point()
+        scoreboard.update_scoreboard()
+        time.sleep(1)
+
+    # Detect l_paddle miss
+    if ball.xcor() < -390:
+        ball.reset_ball()
+        scoreboard.r_point()
+        scoreboard.update_scoreboard()
+        time.sleep(1)
+
+screen.exitonclick()
+
+
+
+
+
+-------TURTLE CROSSING GAME-------
+
+from turtle import Turtle
+STARTING_POSITION = (0, -280)
+MOVE_DISTANCE = 10
+FINISH_LINE_Y = 280
+
+class Player(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.shape("turtle")
+        self.color("white")
+        self.penup()
+        self.goto(STARTING_POSITION)
+        self.setheading(90)
+
+    def player_up(self):
+        self.forward(MOVE_DISTANCE)
+
+    def player_down(self):
+        self.backward(MOVE_DISTANCE)
+
+    def go_to_start(self):
+        self.goto(STARTING_POSITION)
+
+    def is_at_finish_line(self):
+        if self.ycor() > FINISH_LINE_Y:
+            return True
+        else:
+            return False
+
+from turtle import Turtle
+import random
+COLORS = ["LightSalmon", "HoneyDew", "NavajoWhite", "LemonChiffon", "LightPink", "Lavender", "LightCyan"]
+STARTING_MOVE_DISTANCE = 5
+MOVE_INCREMENT = 10
+
+class CarManager:
+    def __init__(self):
+        self.all_cars = []
+        self.car_speed = STARTING_MOVE_DISTANCE
+
+    def create_car(self):
+        random_chance = random.randint(1, 6)
+        if random_chance == 1:
+            new_car = Turtle("square")
+            new_car.shapesize(stretch_wid = 1, stretch_len = 2)
+            new_car.color(random.choice(COLORS))
+            new_car.penup()
+            random_y = random.randint(-240, 240)
+            new_car.goto(300, random_y)
+            self.all_cars.append(new_car)
+
+    def move_cars(self):
+        for car in self.all_cars:
+            car.backward(STARTING_MOVE_DISTANCE)
+
+    def level_up(self):
+        self.car_speed += MOVE_INCREMENT
+
+from turtle import Turtle
+ALIGNMENT = "Center"
+FONT = ("Courier", 24, "normal")
+
+class Scoreboard(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.hideturtle()
+        self.penup()
+        self.color("white")
+        self.goto(-235,255)
+        self.level = 1
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.clear()
+        self.write(f"Level: {self.level}", align=ALIGNMENT, font=FONT)
+
+    def increase_level(self):
+        self.level += 1
+        self.update_scoreboard()
+
+    def you_lose(self):
+        self.goto(0,0)
+        self.write("GAME OVER.", align=ALIGNMENT, font=FONT)
+
+import time
+from turtle import Screen
+from player import Player
+from car_manager import CarManager
+from scoreboard import Scoreboard
+
+screen = Screen()
+screen.title("Turtle Crossing Game")
+screen.setup(width=600, height=600)
+screen.bgcolor("Teal")
+screen.tracer(0)
+
+player = Player()
+car_manager = CarManager()
+scoreboard = Scoreboard()
+
+screen.listen()
+screen.onkey(player.player_up,"Up")
+screen.onkey(player.player_down,"Down")
+
+game_is_on = True
+while game_is_on:
+    time.sleep(0.1)
+    screen.update()
+    car_manager.create_car()
+    car_manager.move_cars()
+
+    # Detect cars
+    for car in car_manager.all_cars:
+        if car.distance(player) < 20:
+            game_is_on = False
+            scoreboard.you_lose()
+
+    # Detect finish line
+    if player.is_at_finish_line():
+        player.go_to_start()
+        car_manager.level_up()
+        scoreboard.increase_level()
+
+screen.exitonclick()
+
+
+
+
+
+-------TURTLE CROSSING GAME-------
+
