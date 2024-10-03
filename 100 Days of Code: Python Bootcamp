@@ -1262,4 +1262,185 @@ while len(guessed_states) < 50:
 
 
 
--------50 UNITED STATES GAME-------
+-------POMODORO TIMER-------
+
+from tkinter import *
+import math
+
+#CONSTANTS
+PINK = "#e2979c"
+RED = "#e7305b"
+GREEN = "#9bdeac"
+YELLOW = "#f7f5dd"
+FONT_NAME = "Courier"
+WORK_MIN = 20
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 10
+reps = 0
+main_timer = None
+
+#TIMER RESET
+def reset_timer():
+    window.after_cancel(main_timer)
+    canvas.itemconfig(timer, text = "00:00")
+    timer_label.config(text = "Timer")
+    checkmarks_label.config(text = "")
+    global reps
+    reps = 0
+
+#TIMER MECHANISM
+def start_timer():
+    global reps
+    reps +=1
+
+    work_sec = WORK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
+
+    if reps == 1 or reps == 3 or reps == 5 or reps == 7:
+        count_down(work_sec)
+        timer_label.config(text = "Work", fg = GREEN)
+    elif reps == 2 or reps == 4 or reps == 6:
+        count_down(short_break_sec)
+        timer_label.config(text = "Short Break", fg = PINK)
+    elif reps == 8:
+        count_down(long_break_sec)
+        timer_label.config(text = "Long Break", fg = RED)
+
+#COUNTDOWN MECHANISM
+def count_down(count):
+    count_min = math.floor(count / 60)
+    count_sec = count % 60
+    if count_sec < 10:
+        count_sec = f"0{count_sec}"
+    canvas.itemconfig(timer, text = f"{count_min}:{count_sec}")
+    if count > 0:
+        global main_timer
+        main_timer = window.after(1000, count_down, count - 1)
+    else:
+        start_timer()
+        marks = ""
+        work_sessions = math.floor(reps / 2)
+        for _ in range(work_sessions):
+            marks += "✔︎"
+        checkmarks_label.config(text = marks)
+
+#UI SETUP
+window = Tk()
+window.title("Pomodoro")
+window.config(padx = 100, pady = 50, bg = YELLOW)
+
+canvas = Canvas(width = 200, height = 224, bg = YELLOW, highlightthickness = 0)
+tomato = PhotoImage(file = "tomato.png")
+canvas.create_image(100, 112, image = tomato)
+timer = canvas.create_text(100, 130, text = "00:00", fill = "white", font = (FONT_NAME, 34, "bold"))
+canvas.grid(row = 1, column = 1)
+
+timer_label = Label(text = "Timer", font = (FONT_NAME, 50), bg = YELLOW, fg = GREEN)
+timer_label.grid(row = 0, column = 1)
+
+checkmarks_label = Label(font = (FONT_NAME, 30), bg = YELLOW, fg = GREEN)
+checkmarks_label.grid(row = 3, column = 1)
+
+start_button = Button(text = "Start", command = start_timer, font = (FONT_NAME, 16), padx = 2, pady = 2, highlightthickness = 0)
+start_button.grid(row = 2, column = 0)
+
+reset_button = Button(text = "Reset", command = reset_timer, font = (FONT_NAME, 16), padx = 2, pady = 2, highlightthickness = 0)
+reset_button.grid(row = 2, column = 2)
+
+window.mainloop()
+
+
+
+
+
+-------PASSWORD MANAGER-------
+
+from tkinter import *
+from tkinter import messagebox
+import random
+import pyperclip
+FONT = "Arial"
+
+#PASSWORD GENERATOR
+def generate():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    nr_letters = random.randint(8, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
+
+    password_letters = [random.choice(letters) for _ in range(nr_letters)]
+    password_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+    password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
+
+    password_list = password_letters + password_symbols + password_numbers
+    random.shuffle(password_list)
+
+    password = "".join(password_list)
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
+
+#SAVE PASSWORD
+def save():
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+
+    if len(website)  == 0 or len(password) == 0:
+        messagebox.showinfo(title = "Error", message = "One or more fields have been left empty.")
+
+    else:
+        is_ok = messagebox.askokcancel(title = website, message = f"These are the details entered: \nEmail: "
+                                                          f"{email} \nPassword: {password} \n Is it okay to save?")
+        if is_ok:
+            with open("data.text", "a") as data_file:
+                data_file.write(f"{website} | {email} | {password}\n")
+                website_entry.delete(0, END)
+                password_entry.delete(0, END)
+
+#UI SETUP
+window = Tk()
+window.title("Password Manager")
+window.config(padx = 50, pady = 50, bg = "white")
+
+canvas = Canvas(width = 200, height = 200, bg = "white", highlightthickness = 0)
+logo = PhotoImage(file = "logo.png")
+canvas.create_image(100, 100, image = logo)
+canvas.grid(row = 0, column = 1)
+
+website_label = Label(text = "Website:", font = (FONT, 16), fg = "black", bg = "white", pady = 2)
+website_label.grid(row = 1, column = 0)
+
+email_label = Label(text = "Email/Username:", font = (FONT, 16), fg = "black", bg = "white", pady = 2)
+email_label.grid(row = 2, column = 0)
+
+password_label = Label(text = "Password:", font = (FONT, 16), fg = "black", bg = "white", pady = 2)
+password_label.grid(row = 3, column = 0)
+
+website_entry = Entry(bg = "white", fg = "black", width = 36, highlightthickness = 2.5)
+website_entry.grid(row = 1, column = 1, columnspan = 2)
+website_entry.focus()
+
+email_entry = Entry(bg = "white", fg = "black", width = 36, highlightthickness = 2.5)
+email_entry.grid(row = 2, column = 1, columnspan = 2)
+email_entry.insert(0, "sarah.warner@helix.com")
+
+password_entry = Entry(bg = "white", fg = "black", width = 22, highlightthickness = 2.5)
+password_entry.grid(row = 3, column = 1)
+
+generate_button = Button(text = "Generate Password", padx = 2, pady = 2, width = 10, highlightthickness = 0, command = generate)
+generate_button.grid(row = 3, column = 2)
+
+add_button = Button(text = "Add", padx = 2, pady = 2, width = 33, highlightthickness = 0, command = save)
+add_button.grid(row = 4, column = 1, columnspan = 2)
+
+window.mainloop()
+
+
+
+
+
+-------PASSWORD MANAGER-------
