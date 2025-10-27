@@ -1,6 +1,5 @@
 ------ 911 CALLS PROJECT ------ 
 
-
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -78,8 +77,8 @@ df = pd.read_csv('911.csv')
 
 
 
------- FINANCE PROJECT ------ 
 
+------ FINANCE PROJECT ------ 
 
 from pandas_datareader import data, wb
 import yfinance as yf
@@ -135,4 +134,328 @@ end = datetime.datetime(2016,1,1)
 
 
 
------- 911 CALLS PROJECT ------ 
+------ LINEAR REGRESSION PROJECT ------ 
+
+#Congratulations! You just got some contract work with an Ecommerce company based in New York City that sells clothing online but they also have in-store style and clothing advice sessions.
+#Customers come in to the store, have sessions/meetings with a personal stylist, then they can go home and order either on a mobile app or website for the clothes they want.
+#The company is trying to decide whether to focus their efforts on their mobile app experience or their website. They've hired you on contract to help them figure it out!
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+
+customers = pd.read_csv('Ecommerce Customers')
+
+#Explore relationships across the entire data set
+  sns.pairplot(data = customers)
+  plt.show()
+
+#Create a linear model plot of Yearly Amount Spent vs. Length of Membership
+  sns.lmplot(data=customers, x = 'Length of Membership', y = 'Yearly Amount Spent')
+  plt.grid()
+  plt.show()
+
+#Train and test the data
+  customers.columns
+  X = customers[['Avg. Session Length', 'Time on App', 'Time on Website', 'Length of Membership']]
+  y = customers['Yearly Amount Spent']
+  from sklearn.model_selection import train_test_split
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 101)
+
+#Train the model
+  from sklearn.linear_model import LinearRegression
+  lm = LinearRegression()
+  lm.fit(X_train, y_train)
+  print('Coefficients: \n', lm.coef_)
+  cdf = pd.DataFrame(lm.coef_, X.columns, columns = ['Coeff'])
+  cdf
+
+#Predict test data
+  predictions = lm.predict(X_test)
+  plt.scatter(y_test, predictions)
+  plt.xlabel('Y Test')
+  plt.ylabel('Predicted Y')
+  plt.show()
+
+#Evaluate the model
+  from sklearn import metrics
+  metrics.mean_absolute_error(y_test, predictions)
+  metrics.mean_squared_error(y_test, predictions)
+  np.sqrt(metrics.mean_squared_error(y_test, predictions))
+
+#Residuals
+  sns.displot((y_test - predictions), kde = True, bins = 40)
+  plt.show()
+
+#Conclusion
+ cdf
+   #For every unit increase in session length, Yearly amount spent increases by $25.98
+   #For every unit increase in time on app, Yearly amount spent increases by $38.59
+   #For every unit increase in time on website, Yearly amount spent increases by $0.19
+   #For every unit increase in length of membership, Yearly amount spent increases by $61.28
+#The company should focus more on their mobile app.
+
+
+
+
+------ LOGISTIC REGRESSION PROJECT ------ 
+
+#Work with an advertising data set and indicate whether or not a particular internet user clicked on an Advertisement.
+#Try to create a model that will predict whether or not they will click on an ad based off the features of that user.
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+ad_data = pd.read_csv('advertising.csv')
+
+#Explore the data
+  sns.jointplot(data = ad_data, x = 'Age', y = 'Area Income')
+  plt.show()
+  sns.jointplot(data = ad_data, x = 'Daily Time Spent on Site', y = 'Daily Internet Usage')
+  plt.show()
+  sns.pairplot(data = ad_data, hue = 'Clicked on Ad')
+  plt.show()
+
+#Train and test the data
+  from sklearn.model_selection import train_test_split
+  ad_data.columns
+  X = ad_data[['Age', 'Area Income', 'Daily Internet Usage', 'Male', 'Daily Time Spent on Site']]
+  y = ad_data['Clicked on Ad']
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 101)
+  from sklearn.linear_model import LogisticRegression
+  logmodel = LogisticRegression()
+  logmodel.fit(X_train, y_train)
+
+#Predictions and Evaluations
+  predictions = logmodel.predict(X_test)
+  from sklearn.metrics import classification_report, confusion_matrix
+  print(classification_report(y_test, predictions))
+  print(confusion_matrix(y_test, predictions))
+
+
+
+
+------ K NEAREST NEIGHBORS PROJECT ------ 
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import sklearn
+
+df = pd.read_csv('KNN_Project_Data')
+
+#Explore the data
+  sns.pairplot(data = df, hue = 'TARGET CLASS')
+
+#Standardize the variables
+  from sklearn.preprocessing import StandardScaler
+  scaler = StandardScaler()
+  scaler.fit(df.drop('TARGET CLASS', axis = 1))
+  scaled_features = scaler.transform(df.drop('TARGET CLASS', axis = 1))
+  scaled_features
+  df_features = pd.DataFrame(scaled_features, columns = df.columns[:-1])
+  df_features
+
+# Train, test, split
+  from sklearn.model_selection import train_test_split
+  X = df_features
+  y = df['TARGET CLASS']
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 101)
+
+#Use KNN
+  from sklearn.neighbors import KNeighborsClassifier
+  knn = KNeighborsClassifier(n_neighbors = 1)
+  knn.fit(X_train, y_train)
+
+#Predictions and evaluations
+  prediction = knn.predict(X_test)
+  from sklearn.metrics import confusion_matrix, classification_report
+  print(confusion_matrix(y_test, prediction))
+  print(classification_report(y_test, prediction))
+
+#Choose a K value
+  error_rate = []
+
+  for i in range (1,60):
+     knn = KNeighborsClassifier(n_neighbors = i)
+     knn.fit(X_train, y_train)
+     prediction_i = knn.predict(X_test)
+     error_rate.append(np.mean(prediction_i != y_test))
+
+  plt.figure(figsize = (12, 8))
+  plt.plot(range (1,60),error_rate, color = 'green', linestyle = '--', marker = 'o', markerfacecolor = 'black', markersize = 10)
+  plt.title('Error Rate vs K Value')
+  plt.xlabel('K Value')
+  plt.ylabel('Error Rate')
+
+#Retrain with new K value
+  knn = KNeighborsClassifier(n_neighbors = 30)
+  knn.fit(X_train, y_train)
+  new_prediciton = knn.predict(X_test)
+
+  print(confusion_matrix(y_test, new_prediciton))
+  print('\n')
+  print(classification_report(y_test, new_prediciton))
+
+
+
+
+------ RANDOM FOREST PROJECT ------ 
+
+#Explore publicly available data from LendingClub.com. Lending Club connects people who need money (borrowers) with people who have money (investors).
+#Hopefully, as an investor you would want to invest in people who showed a profile of having a high probability of paying you back. Try to create a model that will help predict this.
+#Use lending data from 2007-2010 and to classify and predict whether or not the borrower paid back their loan in full.
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+data = pd.read_csv('loan_data.csv')
+
+#Explore the data
+  plt.figure(figsize = (10,6))
+  sns.set_style('darkgrid')
+  data[data['credit.policy']==1]['fico'].hist(bins = 30, alpha = 0.5, color = 'blue', label = 'Credit Policy = 1')
+  data[data['credit.policy']==0]['fico'].hist(bins = 30, alpha = 0.5, color = 'red', label = 'Credit Policy = 0')
+  plt.legend()
+  plt.xlabel('FICO')
+
+  plt.figure(figsize = (10,6))
+  sns.set_style('darkgrid')
+  data[data['not.fully.paid']==1]['fico'].hist(bins = 30, alpha = 0.5, color = 'blue', label = 'Not Fully Paid = 1')
+  data[data['not.fully.paid']==0]['fico'].hist(bins = 30, alpha = 0.5, color = 'red', label = 'Not Fully Paid = 0')
+  plt.legend()
+  plt.xlabel('FICO')
+
+  sns.jointplot(data = data, x = 'fico', y = 'int.rate', color = 'purple')
+
+  plt.figure(figsize = (10,4))
+  sns.lmplot(data = data, x = 'fico', y = 'int.rate', hue = 'credit.policy', col = 'not.fully.paid', palette = 'Set1')
+
+#Set up the data
+  data.info()
+  cat_feats = ['purpose']
+  final_data = pd.get_dummies(data, columns = cat_feats, drop_first = True)
+  final_data
+
+#Train, test, split
+  from sklearn.model_selection import train_test_split
+  X = final_data.drop('not.fully.paid', axis = 1)
+  y = final_data['not.fully.paid']
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 101)
+
+#Train decision tree model
+  from sklearn.tree import DecisionTreeClassifier
+  dtree = DecisionTreeClassifier()
+  dtree.fit(X_train, y_train)
+
+#Predictions and evaluation of the decision tree
+  from sklearn.metrics import classification_report, confusion_matrix
+  predictions = dtree.predict(X_test)
+  print(classification_report(y_test, predictions))
+  print(confusion_matrix(y_test, predictions))
+
+#Train the random forest model
+  from sklearn.ensemble import RandomForestClassifier
+  rfc = RandomForestClassifier()
+  rfc.fit(X_train, y_train)
+
+#Predictions and evaluation
+  new_predictions = rfc.predict(X_test)
+  print(classification_report(y_test, new_predictions))
+  print(confusion_matrix(y_test, new_predictions))
+
+
+
+
+------ NATURAL LANGUAGE PROCESSING PROJECT ------ 
+
+#Attempt to classify Yelp Reviews into 1 star or 5 star categories based off the text content in the reviews.
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+yelp = pd.read_csv('yelp.csv')
+
+yelp['text length'] = yelp['text'].apply(len)
+
+#Explore the data
+  p1 = sns.FacetGrid(yelp, col = "stars")
+  p1.map(sns.histplot, "text length", bins=20)
+
+  sns.boxplot(data = yelp, x = 'stars', y = 'text length', hue = 'stars', legend = False)
+
+  sns.countplot(data = yelp, x = 'stars', hue = 'stars', legend = False)
+
+  stars = yelp.groupby('stars').mean(numeric_only = True)
+  stars
+
+  stars_corr = stars.corr()
+  stars_corr
+  sns.heatmap(data = stars_corr, cmap = 'coolwarm', annot = True)
+
+#NLP classification
+  yelp_class = yelp[(['stars'] == 1) | (yelp['stars'] == 5)]
+  yelp_class.head()
+  X = yelp_class['text']
+  y = yelp_class['stars']
+  from sklearn.feature_extraction.text import CountVectorizer
+  cv = CountVectorizer()
+  X = cv.fit_transform(X)
+
+#Train, test, split
+  from sklearn.model_selection import train_test_split
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 101)
+
+#Train the model
+  from sklearn.naive_bayes import MultinomialNB
+  nb = MultinomialNB()
+  nb.fit(X_train, y_train)
+
+#Predictions and evaluations
+  predictions = nb.predict(X_test)
+  from sklearn.metrics import confusion_matrix, classification_report
+  print(confusion_matrix(y_test, predictions))
+  print('\n')
+  print(classification_report(y_test, predictions))
+
+#Using text processing
+  from sklearn.feature_extraction.text import TfidfTransformer
+  from sklearn.pipeline import Pipeline
+  pipeline = Pipeline([
+     ('bow', CountVectorizer()), #strings to token integer counts
+     ('tfidf', TfidfTransformer()), #integer counts to weighted TF-IDF scores
+     ('classifier', MultinomialNB()), #train on TF-IDF vectors with Naive Bayes classifier])
+
+#Using the pipeline
+  X = yelp_class['text']
+  y = yelp_class['stars']
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 101)
+  pipeline.fit(X_train, y_train)
+  predictions = pipeline.predict(X_test)
+  print(confusion_matrix(y_test, predictions))
+  print('\n')
+  print(classification_report(y_test, predictions))
+  
+
+
+
+------ NEURAL NETWORKS PROJECT ------ 
+
+
+
+
+
+
+
+
+
