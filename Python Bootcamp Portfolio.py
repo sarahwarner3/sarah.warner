@@ -1,4 +1,4 @@
--------TIP CALCULATOR-------
+#-------TIP CALCULATOR-------#
 
 print("Welcome to the tip calculator!")
 bill = float(input("What was the total bill? $"))
@@ -15,7 +15,7 @@ print(f"Each person should pay: ${final_amount}")
 
 
 
--------TREASURE ISLAND GAME-------
+#-------TREASURE ISLAND GAME-------#
 
 print('''
 *******************************************************************************
@@ -70,7 +70,7 @@ else:
 
 
 
--------ROCK, PAPER, SCISSORS GAME-------
+#-------ROCK, PAPER, SCISSORS GAME-------#
 
 rock = '''
     _______
@@ -138,7 +138,7 @@ elif user_choice == 2 and computer_choice == 1:
 
 
 
--------PASSWORD GENERATOR-------
+#-------PASSWORD GENERATOR-------#
 
 import random
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -191,7 +191,7 @@ print(f"Your password is: {final_password}")
 
 
 
--------HANGMAN GAME-------
+#-------HANGMAN GAME-------#
 
 import random
 import hangman_words
@@ -253,7 +253,7 @@ while not game_over:
 
 
 
--------CAESAR CIPHER-------
+#-------CAESAR CIPHER-------#
 
 import art
 print(art.logo)
@@ -292,7 +292,7 @@ while should_continue:
 
 
 
--------CALCULATOR-------
+#-------CALCULATOR-------#
 
 import art
 print(art.logo)
@@ -344,7 +344,7 @@ calculator()
 
 
 
--------BLACKJACK GAME-------
+#-------BLACKJACK GAME-------#
 
 import random
 
@@ -424,7 +424,7 @@ while input("Do you want to play a game of Blackjack? Type 'y' or 'n': ").lower(
 
 
 
--------NUMBER GUESSING GAME-------
+#-------NUMBER GUESSING GAME-------#
 
 import random
 logo = """
@@ -484,7 +484,7 @@ while playing_game is True:
 
 
 
--------HIGHER OR LOWER GAME-------
+#-------HIGHER OR LOWER GAME-------#
 
 import game_data
 import random
@@ -565,7 +565,7 @@ while game_continue:
 
 
 
--------COFFEE MACHINE-------
+#-------COFFEE MACHINE-------#
 
 MENU = {
     "espresso": {
@@ -659,7 +659,7 @@ while machine_on:
 
 
 
--------QUIZ GAME (Object Oriented Programming)-------
+#-------QUIZ GAME (Object Oriented Programming)-------#
 
 question_data = [
     {"question": "Approximately one quarter of human bones are in the feet.", "correct_answer": "True"},
@@ -756,7 +756,7 @@ print(f"Your final score: {quiz.score}/{quiz.question_number}")
 
 
 
--------SNAKE GAME-------
+#-------SNAKE GAME-------#
 
 from turtle import Turtle
 STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
@@ -907,7 +907,7 @@ screen.exitonclick()
 
 
 
--------PONG GAME-------
+#-------PONG GAME-------#
 
 from turtle import Turtle
 
@@ -1038,7 +1038,7 @@ screen.exitonclick()
 
 
 
--------TURTLE CROSSING GAME-------
+#-------TURTLE CROSSING GAME-------#
 
 from turtle import Turtle
 STARTING_POSITION = (0, -280)
@@ -1169,7 +1169,7 @@ screen.exitonclick()
 
 
 
--------50 UNITED STATES GAME-------
+#-------50 UNITED STATES GAME-------#
 
 state,x,y
 Alabama,139,-77
@@ -1262,7 +1262,7 @@ while len(guessed_states) < 50:
 
 
 
--------POMODORO TIMER-------
+#-------POMODORO TIMER-------#
 
 from tkinter import *
 import math
