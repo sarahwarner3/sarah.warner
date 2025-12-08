@@ -1,4 +1,4 @@
------- 911 CALLS PROJECT ------ 
+#------ 911 CALLS PROJECT ------#
 
 import numpy as np
 import pandas as pd
@@ -78,7 +78,7 @@ df = pd.read_csv('911.csv')
 
 
 
------- FINANCE PROJECT ------ 
+#------ FINANCE PROJECT ------#
 
 from pandas_datareader import data, wb
 import yfinance as yf
@@ -134,7 +134,7 @@ end = datetime.datetime(2016,1,1)
 
 
 
------- LINEAR REGRESSION PROJECT ------ 
+#------ LINEAR REGRESSION PROJECT ------#
 
 #Congratulations! You just got some contract work with an Ecommerce company based in New York City that sells clothing online but they also have in-store style and clothing advice sessions.
 #Customers come in to the store, have sessions/meetings with a personal stylist, then they can go home and order either on a mobile app or website for the clothes they want.
@@ -200,7 +200,7 @@ customers = pd.read_csv('Ecommerce Customers')
 
 
 
------- LOGISTIC REGRESSION PROJECT ------ 
+#------ LOGISTIC REGRESSION PROJECT ------# 
 
 #Work with an advertising data set and indicate whether or not a particular internet user clicked on an Advertisement.
 #Try to create a model that will predict whether or not they will click on an ad based off the features of that user.
@@ -240,7 +240,7 @@ ad_data = pd.read_csv('advertising.csv')
 
 
 
------- K NEAREST NEIGHBORS PROJECT ------ 
+#------ K NEAREST NEIGHBORS PROJECT ------# 
 
 import pandas as pd
 import numpy as np
@@ -306,7 +306,7 @@ df = pd.read_csv('KNN_Project_Data')
 
 
 
------- RANDOM FOREST PROJECT ------ 
+#------ RANDOM FOREST PROJECT ------# 
 
 #Explore publicly available data from LendingClub.com. Lending Club connects people who need money (borrowers) with people who have money (investors).
 #Hopefully, as an investor you would want to invest in people who showed a profile of having a high probability of paying you back. Try to create a model that will help predict this.
@@ -375,7 +375,7 @@ data = pd.read_csv('loan_data.csv')
 
 
 
------- NATURAL LANGUAGE PROCESSING PROJECT ------ 
+#------ NATURAL LANGUAGE PROCESSING PROJECT ------# 
 
 #Attempt to classify Yelp Reviews into 1 star or 5 star categories based off the text content in the reviews.
 
@@ -449,7 +449,7 @@ yelp['text length'] = yelp['text'].apply(len)
 
 
 
------- NEURAL NETWORKS PROJECT ------ 
+#------ NEURAL NETWORKS PROJECT ------# 
 
 #Use historical data from LendingClub on loans given out with information on whether the borrower defaulted, build a model that can predict if a borrower will pay back their loan.
 
