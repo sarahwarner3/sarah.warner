@@ -1,5 +1,6 @@
 #-------QUIZ GAME (Object Oriented Programming)-------#
 
+#--data.py--#
 question_data = [
     {"question": "Approximately one quarter of human bones are in the feet.", "correct_answer": "True"},
     {"question": "The total surface area of a human lungs is the size of a football pitch.", "correct_answer": "True"},
@@ -35,11 +36,13 @@ question_data = [
      "correct_answer": "False", "incorrect_answers": ["True"]}
 ]
 
+#--question_model.py--#
 class Question:
     def __init__(self, question, correct_answer):
         self.question = question
         self.correct_answer = correct_answer
 
+#--quiz_brain.py--#
 class QuizBrain:
     def __init__(self, question_list):
         self.question_number = 0
@@ -64,6 +67,11 @@ class QuizBrain:
         print(f"The correct answer was {correct_answer}.")
         print(f"Your current score: {self.score}/{self.question_number}")
         print("\n")
+
+#--main.py--#
+from question_model import Question
+from data import question_data
+from quiz_brain import QuizBrain
 
 question_bank = []
 
